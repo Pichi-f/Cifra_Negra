@@ -1,0 +1,11 @@
+config/credenciales.json
+config/cookies_x.pkl
+config/cookies_facebook.pkl
+config/cookies_x_manual.json
+config/cookies_fb_manual.json
+data/
+logs/
+modelos/
+__pycache__/
+*.pyc
+.env

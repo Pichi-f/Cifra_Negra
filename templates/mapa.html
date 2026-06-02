@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Cifra Negra | Mapa de Calor</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:wght@400;600&display=swap"
+		rel="stylesheet"
+	/>
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body>
+	<div class="app-shell">
+		<aside class="sidebar">
+			<div class="brand">
+				<div class="brand-badge">CN</div>
+				<div>
+					<p class="brand-title">Cifra Negra</p>
+					<p class="brand-subtitle">Mapa de criminalidad</p>
+				</div>
+			</div>
+
+			<section class="panel">
+				<h2>Categoria de incidentes</h2>
+				<div class="chip-grid">
+					<label class="chip">
+						<input type="checkbox" name="categoria" value="robo" checked />
+						Robo o Transeunte
+					</label>
+					<label class="chip">
+						<input type="checkbox" name="categoria" value="extorsion" checked />
+						Extorsion Comercial
+					</label>
+					<label class="chip">
+						<input type="checkbox" name="categoria" value="agresion" checked />
+						Agresion Fisica
+					</label>
+					<label class="chip">
+						<input type="checkbox" name="categoria" value="otro" checked />
+						Otros Incidentes
+					</label>
+				</div>
+			</section>
+
+			<section class="panel">
+				<h2>Rango de fechas</h2>
+				<div class="field">
+					<label for="fecha_inicio">Fecha inicio</label>
+					<input type="date" id="fecha_inicio" name="fecha_inicio" />
+				</div>
+				<div class="field">
+					<label for="fecha_fin">Fecha fin</label>
+					<input type="date" id="fecha_fin" name="fecha_fin" />
+				</div>
+				<button class="primary" id="aplicar_filtros">Aplicar filtros</button>
+			</section>
+
+			<section class="panel stats">
+				<div class="stats-header">
+					<h2>Incidentes totales</h2>
+					<span class="badge" id="stats_variacion">Actualizado</span>
+				</div>
+				<p class="stat-value" id="stats_total">0</p>
+				<div class="stat-list">
+					<div class="stat-row">
+						<span>Robos</span>
+						<span id="stats_robo">0</span>
+					</div>
+					<div class="stat-row">
+						<span>Extorsiones</span>
+						<span id="stats_extorsion">0</span>
+					</div>
+					<div class="stat-row">
+						<span>Agresiones</span>
+						<span id="stats_agresion">0</span>
+					</div>
+					<div class="stat-row">
+						<span>Otros</span>
+						<span id="stats_otro">0</span>
+					</div>
+				</div>
+				<p class="stat-foot" id="stats_actualizacion">Ultima actualizacion: -</p>
+			</section>
+
+			<section class="panel analyst">
+				<div class="analyst-avatar">AM</div>
+				<div>
+					<p class="analyst-title">Analista Master</p>
+					<p class="analyst-subtitle">Unidad de inteligencia</p>
+				</div>
+			</section>
+		</aside>
+
+		<main class="map-shell">
+			<div class="map-header">
+				<div>
+					<h1>Departamento de Guatemala</h1>
+					<p>Mapa de calor de incidentes filtrados.</p>
+				</div>
+				<div class="map-controls">
+					<button class="ghost" id="btn_refrescar">Refrescar</button>
+					<button class="ghost" id="btn_reset">Reset filtros</button>
+				</div>
+			</div>
+
+			<div class="map-card">
+				<iframe
+					id="mapa_iframe"
+					title="Mapa de calor Guatemala"
+					src="/mapa_folium"
+					loading="lazy"
+				></iframe>
+			</div>
+
+			<div class="legend">
+				<span>Densidad de incidentes</span>
+				<div class="legend-bar"></div>
+				<div class="legend-labels">
+					<span>Baja</span>
+					<span>Alta</span>
+				</div>
+			</div>
+		</main>
+	</div>
+
+	<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
