@@ -260,8 +260,6 @@ def mapa_folium():
 
     if categoria and len(categoria) == 1:
         categoria = categoria[0]
-    elif categoria and len(categoria) > 1:
-        categoria = None
 
     generar_mapa(
         categoria=categoria,
@@ -279,9 +277,12 @@ def mapa_folium():
 @app.route('/estadisticas')
 def estadisticas():
     """Retorna estadísticas en JSON para el panel lateral."""
-    categoria = request.args.get('categoria') or None
+    categoria = request.args.getlist('categoria') or None
     fecha_inicio = request.args.get('fecha_inicio') or None
     fecha_fin = request.args.get('fecha_fin') or None
+
+    if categoria and len(categoria) == 1:
+        categoria = categoria[0]
 
     return jsonify(
         obtener_estadisticas(

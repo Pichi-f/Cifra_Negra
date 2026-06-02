@@ -116,8 +116,13 @@ def obtener_indicios_para_mapa(categoria=None, fecha_inicio=None, fecha_fin=None
     parametros = []
 
     if categoria:
-        query += " AND categoria_delito = ?"
-        parametros.append(categoria)
+        if isinstance(categoria, (list, tuple)):
+            placeholders = ",".join(["?"] * len(categoria))
+            query += f" AND categoria_delito IN ({placeholders})"
+            parametros.extend(categoria)
+        else:
+            query += " AND categoria_delito = ?"
+            parametros.append(categoria)
     if fecha_inicio:
         query += " AND fecha_publicacion >= ?"
         parametros.append(fecha_inicio)
