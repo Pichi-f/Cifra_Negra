@@ -28,19 +28,19 @@
 				<div class="chip-grid">
 					<label class="chip">
 						<input type="checkbox" name="categoria" value="robo" checked />
-						Robo o Transeunte
+						Robos / asaltos
 					</label>
 					<label class="chip">
 						<input type="checkbox" name="categoria" value="extorsion" checked />
-						Extorsion Comercial
+						Extorsiones
 					</label>
 					<label class="chip">
 						<input type="checkbox" name="categoria" value="agresion" checked />
-						Agresion Fisica
+						Agresiones / violencia
 					</label>
 					<label class="chip">
 						<input type="checkbox" name="categoria" value="otro" checked />
-						Otros Incidentes
+						Otros reportes
 					</label>
 				</div>
 			</section>
@@ -56,6 +56,16 @@
 					<input type="date" id="fecha_fin" name="fecha_fin" />
 				</div>
 				<button class="primary" id="aplicar_filtros">Aplicar filtros</button>
+			</section>
+
+			<section class="panel">
+				<h2>Actualizacion de datos</h2>
+				<p class="helper-text">Se actualiza el mapa con nueva informacion.</p>
+				<div class="action-grid">
+					<button class="secondary" id="btn_extraccion">Buscar nuevos reportes</button>
+					<button class="secondary" id="btn_pipeline">Procesar y actualizar mapa</button>
+				</div>
+				<p class="status" id="status_acciones">Listo</p>
 			</section>
 
 			<section class="panel stats">

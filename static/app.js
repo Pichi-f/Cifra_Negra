@@ -2,6 +2,9 @@ const mapaIframe = document.getElementById("mapa_iframe");
 const btnAplicar = document.getElementById("aplicar_filtros");
 const btnRefrescar = document.getElementById("btn_refrescar");
 const btnReset = document.getElementById("btn_reset");
+const btnExtraccion = document.getElementById("btn_extraccion");
+const btnPipeline = document.getElementById("btn_pipeline");
+const statusAcciones = document.getElementById("status_acciones");
 
 const stats = {
   total: document.getElementById("stats_total"),
@@ -50,12 +53,53 @@ function aplicarFiltros() {
   actualizarStats(query);
 }
 
+function setEstadoAcciones(mensaje, tipo = "") {
+  if (!statusAcciones) return;
+  statusAcciones.textContent = mensaje;
+  statusAcciones.dataset.state = tipo;
+}
+
+async function ejecutarAccion(url, mensajeInicio, mensajeFin) {
+  setEstadoAcciones(mensajeInicio, "running");
+  btnExtraccion?.setAttribute("disabled", "true");
+  btnPipeline?.setAttribute("disabled", "true");
+  try {
+    const res = await fetch(url, { method: "POST" });
+    const data = await res.json();
+    setEstadoAcciones(mensajeFin, "success");
+    return data;
+  } catch (err) {
+    setEstadoAcciones("Ocurrio un error al ejecutar la accion", "error");
+    return null;
+  } finally {
+    btnExtraccion?.removeAttribute("disabled");
+    btnPipeline?.removeAttribute("disabled");
+  }
+}
+
 btnAplicar?.addEventListener("click", aplicarFiltros);
 btnRefrescar?.addEventListener("click", aplicarFiltros);
 btnReset?.addEventListener("click", () => {
   document.querySelectorAll("input[name='categoria']").forEach((c) => (c.checked = true));
   document.getElementById("fecha_inicio").value = "";
   document.getElementById("fecha_fin").value = "";
+  aplicarFiltros();
+});
+
+btnExtraccion?.addEventListener("click", async () => {
+  await ejecutarAccion(
+    "/ejecutar_extraccion",
+    "Buscando nuevos reportes...",
+    "Extraccion completada"
+  );
+});
+
+btnPipeline?.addEventListener("click", async () => {
+  await ejecutarAccion(
+    "/ejecutar_pipeline",
+    "Procesando reportes...",
+    "Mapa actualizado"
+  );
   aplicarFiltros();
 });
 
